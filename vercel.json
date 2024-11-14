@@ -1,0 +1,95 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "nuxt.config.js",
+            "use": "@nuxtjs/vercel-builder",
+            "config": {
+                "serverFiles": ["config/**", "helpers/**", "api/**"]
+            }
+        },
+        {
+            "src": "api/**/*.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/_nuxt/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "max-age=31557600"
+                }
+            ]
+        },
+        {
+            "source": "/sw.js",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=43200, immutable"
+                },
+                {
+                    "key": "Service-Worker-Allowed",
+                    "value": "/"
+                }
+            ]
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/sitemap.xml",
+            "destination": "/api/index.js"
+        },
+        {
+            "source": "/sw.js",
+            "destination": "/_nuxt/static/sw.js"
+        }
+    ],
+    "redirects": [
+        {
+            "source": "/components",
+            "destination": "/gallery",
+            "permanent": false
+        },
+        {
+            "source": "/employment-application",
+            "destination": "/careers"
+        },
+        {
+            "source": "/schedule",
+            "destination": "/appointment"
+        },
+        {
+            "source": "/about",
+            "destination": "/meet-the-team",
+            "permanent": false
+        },
+        {
+            "source": "/videos",
+            "destination": "/gallery",
+            "permanent": false
+        },
+        {
+            "source": "/gallery-test",
+            "destination": "/gallery"
+        },
+        {
+            "source": "/apparel",
+            "destination": "/"
+        },
+        {
+            "source": "/blog(.*)",
+            "destination": "/"
+        },
+        {
+            "source": "/brands(.*)",
+            "destination": "/"
+        }
+    ],
+    "github": {
+        "silent": true
+    },
+    "trailingSlash": false
+  }
